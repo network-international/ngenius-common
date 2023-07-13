@@ -38,6 +38,10 @@ class NgeniusOrderStatuses {
 				'status' => 'wc-ng-auth-reversed',
 				'label'  => 'N-Genius Auth Reversed',
 			],
+            [
+                'status' => 'wc-ng-refunded',
+                'label'  => 'N-Genius Fully Refunded',
+            ],
 		];
 	}
 
