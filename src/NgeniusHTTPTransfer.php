@@ -11,6 +11,23 @@ class NgeniusHTTPTransfer
     private array $data;
 
     /**
+     * @param string $url
+     * @param string $httpVersion
+     * @param string $method
+     * @param array $data
+     * @param array $headers
+     */
+    public function __construct(string $url, string $httpVersion = "", string $method = "", array $data = [], array $headers = [])
+    {
+        $this->url = $url;
+        $this->httpVersion = $httpVersion;
+        $this->headers = $headers;
+        $this->method = $method;
+        $this->data = $data;
+    }
+
+
+    /**
      * @param $key
      * @return void
      */
