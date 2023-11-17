@@ -16,9 +16,9 @@ class ApiProcessor
     /**
      * Gets Last Transaction
      *
-     * @return string
+     * @return string|array
      */
-    public function getLastTransaction(): string
+    public function getLastTransaction(): string|array
     {
         $lastTransaction = '';
         if (isset($this->response['_embedded']['payment'][0]['_embedded'][self::NGENIUS_CAPTURE_LITERAL])
