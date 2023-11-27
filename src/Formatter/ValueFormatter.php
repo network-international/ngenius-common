@@ -2,6 +2,8 @@
 
 namespace Ngenius\NgeniusCommon\Formatter;
 
+use NumberFormatter;
+
 class ValueFormatter
 {
     /**
@@ -35,5 +37,21 @@ class ValueFormatter
         } elseif (in_array($currencyCode, ['KWD', 'BHD', 'OMR'])) {
             $amount *= 10;
         }
+    }
+
+    /**
+     * Sets amount decimal places for currency
+     *
+     * @param $currencyCode
+     * @param $amount
+     * @return void
+     */
+    public static function formatCurrencyDecimals($currencyCode, &$amount): void
+    {
+        $fmt = new NumberFormatter( 'en_EN', NumberFormatter::CURRENCY );
+
+        $formattedCurrency = $fmt->formatCurrency($amount, $currencyCode);
+
+        $amount = floatval(preg_replace('/[^\d\.]+/', '', $formattedCurrency));
     }
 }
