@@ -7,6 +7,7 @@ class ApiProcessor
     private array $response;
 
     public const NGENIUS_CAPTURE_LITERAL = 'cnp:capture';
+    public const NGENIUS_PURCHASED  = 'PURCHASED';
 
     public function __construct(array $response)
     {
@@ -112,5 +113,18 @@ class ApiProcessor
     public function setResponse(array $response): void
     {
         $this->response = $response;
+    }
+
+    /**
+     * @param string &$paymentAction
+     * @param string &$paymentState
+     */
+    public function processPaymentAction(&$paymentAction, &$paymentState)
+    {
+        if ($this->response['_embedded']['payment'][0]['paymentMethod']['name'] === 'CHINA_UNION_PAY' &&
+            $paymentAction === 'SALE') {
+            $paymentAction = 'PURCHASE';
+            $paymentState = self::NGENIUS_PURCHASED;
+        }
     }
 }
