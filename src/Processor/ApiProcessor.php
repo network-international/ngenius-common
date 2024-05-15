@@ -7,7 +7,8 @@ class ApiProcessor
     private array $response;
 
     public const NGENIUS_CAPTURE_LITERAL = 'cnp:capture';
-    public const NGENIUS_PURCHASED  = 'PURCHASED';
+    public const NGENIUS_PURCHASED       = 'PURCHASED';
+    public const NGENIUS_STATES_SUCCESS  = ['AUTHORISED', self::NGENIUS_PURCHASED, 'CAPTURED'];
 
     public function __construct(array $response)
     {
@@ -25,9 +26,12 @@ class ApiProcessor
         if (isset($this->response['_embedded']['payment'][0]['_embedded'][self::NGENIUS_CAPTURE_LITERAL])
             && is_array($this->response['_embedded']['payment'][0]['_embedded'][self::NGENIUS_CAPTURE_LITERAL])
         ) {
-            $lastTransaction = end($this->response['_embedded']['payment'][0]
-            ['_embedded'][self::NGENIUS_CAPTURE_LITERAL]);
+            $lastTransaction = end(
+                $this->response['_embedded']['payment'][0]
+                ['_embedded'][self::NGENIUS_CAPTURE_LITERAL]
+            );
         }
+
         return $lastTransaction;
     }
 
@@ -41,8 +45,9 @@ class ApiProcessor
         $paymentId = '';
         if (isset($this->response['_embedded']['payment'][0]['_id'])) {
             $transactionIdRes = explode(":", $this->response['_embedded']['payment'][0]['_id']);
-            $paymentId = end($transactionIdRes);
+            $paymentId        = end($transactionIdRes);
         }
+
         return $paymentId;
     }
 
@@ -54,14 +59,15 @@ class ApiProcessor
     public function getTransactionId(): string
     {
         $lastTransaction = $this->getLastTransaction();
-        $transactionId = '';
+        $transactionId   = '';
         if (isset($lastTransaction['_links']['self']['href'])) {
             $transactionArr = explode('/', $lastTransaction['_links']['self']['href']);
-            $transactionId = end($transactionArr);
+            $transactionId  = end($transactionArr);
         } elseif ($lastTransaction['_links']['cnp:refund']['href'] ?? false) {
             $transactionArr = explode('/', $lastTransaction['_links']['cnp:refund']['href']);
-            $transactionId = $transactionArr[count($transactionArr)-2];
+            $transactionId  = $transactionArr[count($transactionArr) - 2];
         }
+
         return $transactionId;
     }
 
@@ -76,8 +82,10 @@ class ApiProcessor
         if (isset($this->response['_embedded']['payment'][0]['_embedded'][self::NGENIUS_CAPTURE_LITERAL])
             && is_array($this->response['_embedded']['payment'][0]['_embedded'][self::NGENIUS_CAPTURE_LITERAL])
         ) {
-            foreach ($this->response['_embedded']['payment'][0]['_embedded']
-                     [self::NGENIUS_CAPTURE_LITERAL] as $capture) {
+            foreach (
+                $this->response['_embedded']['payment'][0]['_embedded']
+                [self::NGENIUS_CAPTURE_LITERAL] as $capture
+            ) {
                 if (isset($capture['state']) && ($capture['state'] == 'SUCCESS')
                     && isset($capture['amount']['value'])
                 ) {
@@ -85,6 +93,7 @@ class ApiProcessor
                 }
             }
         }
+
         return $captureAmount;
     }
 
@@ -124,7 +133,31 @@ class ApiProcessor
         if ($this->response['_embedded']['payment'][0]['paymentMethod']['name'] === 'CHINA_UNION_PAY' &&
             $paymentAction === 'SALE') {
             $paymentAction = 'PURCHASE';
-            $paymentState = self::NGENIUS_PURCHASED;
+            $paymentState  = self::NGENIUS_PURCHASED;
         }
+    }
+
+    /**
+     * Extracts payment result
+     *
+     * @return array|null
+     */
+    public function getPaymentResult(): ?array
+    {
+        return $this->response['_embedded']['payment'][0];
+    }
+
+    /**
+     * Checks if N-Genius order has been approved
+     *
+     * @return bool
+     */
+    public function isPaymentConfirmed(): bool
+    {
+        if (in_array($this->getState(), self::NGENIUS_STATES_SUCCESS)) {
+            return true;
+        }
+
+        return false;
     }
 }
