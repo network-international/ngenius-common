@@ -11,6 +11,7 @@ class ValueFormatter
      *
      * @param $currencyCode
      * @param $amount
+     *
      * @return float|int
      */
     public static function formatOrderStatusAmount($currencyCode, $amount): float|int
@@ -20,6 +21,7 @@ class ValueFormatter
         } elseif (in_array($currencyCode, ['KWD', 'BHD', 'OMR'])) {
             $amount /= 10.000;
         }
+
         return $amount;
     }
 
@@ -28,6 +30,7 @@ class ValueFormatter
      *
      * @param $currencyCode
      * @param $amount
+     *
      * @return void
      */
     public static function formatCurrencyAmount($currencyCode, &$amount): void
@@ -44,11 +47,12 @@ class ValueFormatter
      *
      * @param $currencyCode
      * @param $amount
+     *
      * @return void
      */
     public static function formatCurrencyDecimals($currencyCode, &$amount): void
     {
-        $fmt = new NumberFormatter( 'en_EN', NumberFormatter::CURRENCY );
+        $fmt = new NumberFormatter('en_EN', NumberFormatter::CURRENCY);
 
         $formattedCurrency = $fmt->formatCurrency($amount, $currencyCode);
 
