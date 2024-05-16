@@ -42,6 +42,10 @@ class NgeniusHTTPCommon
             $curlConfig[CURLOPT_POSTFIELDS] = json_encode($data);
         }
 
+        if ($method === "PUT") {
+            $curlConfig[CURLOPT_PUT] = true;
+        }
+
         curl_setopt_array($ch, $curlConfig);
         $response = curl_exec($ch);
 
