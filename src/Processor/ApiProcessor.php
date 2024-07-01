@@ -6,9 +6,10 @@ class ApiProcessor
 {
     private array $response;
 
-    public const NGENIUS_CAPTURE_LITERAL = 'cnp:capture';
-    public const NGENIUS_PURCHASED       = 'PURCHASED';
-    public const NGENIUS_STATES_SUCCESS  = ['AUTHORISED', self::NGENIUS_PURCHASED, 'CAPTURED'];
+    public const NGENIUS_CAPTURE_LITERAL  = 'cnp:capture';
+    public const NGENIUS_PURCHASED        = 'PURCHASED';
+    public const NGENIUS_STATES_ABANDONED = ['STARTED', 'PENDING', 'AWAIT3DS', 'CANCELLED'];
+    public const NGENIUS_STATES_SUCCESS   = ['AUTHORISED', self::NGENIUS_PURCHASED, 'CAPTURED'];
 
     public function __construct(array $response)
     {
@@ -148,16 +149,22 @@ class ApiProcessor
     }
 
     /**
-     * Checks if N-Genius order has been approved
+     * Check if N-Genius order has been approved
      *
      * @return bool
      */
     public function isPaymentConfirmed(): bool
     {
-        if (in_array($this->getState(), self::NGENIUS_STATES_SUCCESS)) {
-            return true;
-        }
+        return in_array($this->getState(), self::NGENIUS_STATES_SUCCESS);
+    }
 
-        return false;
+    /**
+     * Check if N-Genius order has been abandoned
+     *
+     * @return bool
+     */
+    public function isPaymentAbandoned(): bool
+    {
+        return in_array($this->getState(), self::NGENIUS_STATES_ABANDONED);
     }
 }
