@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.0.11] - 2024-08-05
+
+- Add Transaction Processor class. 
+
 ## [v1.0.10] - 2024-07-01
 
 - Introduce new floating-point number formatting.
