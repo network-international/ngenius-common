@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.0.12] - 2024-08-26
+
+- Fix Value Formatter amount conversions with comma separators.
+
 ## [v1.0.11] - 2024-08-05
 
 - Add Transaction Processor class. 

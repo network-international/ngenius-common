@@ -71,7 +71,7 @@ class ValueFormatter
 
         $floatString = (string)$floatNumber;
 
-        $cleanedString = str_replace('.', '', $floatString);
+        $cleanedString = str_replace([',', '.'], '', $floatString);
 
         return (int)$cleanedString;
     }
