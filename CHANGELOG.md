@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[v1.2.1]](https://github.com/network-international/ngenius-common/releases/tag/v1.2.1)
+
+- Improved error handling for order status queries with missing values.
+
 ## [[v1.2.0]](https://github.com/network-international/ngenius-common/releases/tag/v1.2.0)
 
 - Upgraded the request handler to GuzzleHTTP.
