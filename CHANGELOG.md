@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[v1.3.0]](https://github.com/network-international/ngenius-common/releases/tag/v1.3.0)
+
+- Added invoice API compatibility.
+
 ## [[v1.2.1]](https://github.com/network-international/ngenius-common/releases/tag/v1.2.1)
 
 - Improved error handling for order status queries with missing values.
