@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[v1.4.0]](https://github.com/network-international/ngenius-common/releases/tag/v1.4.0)
+
+- Enhanced the common library to handle additional wallet pathways.
+- Upgraded the refund URL extractor for improved reliability.
+- Prioritised the cnp:refund action over cnp:cancel for KSA region card capture states.
+- Introduced PARTIALLY_CAPTURED to the shared success states.
+- Ensured full and partial refund flows operate correctly for both KSA and UAE regions when tested on Shopify.
+
 ## [[v1.3.0]](https://github.com/network-international/ngenius-common/releases/tag/v1.3.0)
 
 - Added invoice API compatibility.
