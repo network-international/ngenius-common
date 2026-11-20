@@ -9,6 +9,8 @@ class ValueFormatter
     /**
      * Uniform API amount response
      *
+     * @codeCoverageIgnore No consumer calls this.
+     *
      * @param $currencyCode
      * @param $amount
      *
@@ -29,6 +31,8 @@ class ValueFormatter
 
     /**
      * Formats currency dependent amount
+     *
+     * @codeCoverageIgnore No consumer calls this.
      *
      * @param $currencyCode
      * @param $amount

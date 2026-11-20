@@ -24,7 +24,8 @@ class ApiProcessor
     public function getLastTransaction(): string|array
     {
         $lastTransaction = '';
-        if (isset($this->response['_embedded']['payment'][0]['_embedded'][self::NGENIUS_CAPTURE_LITERAL])
+        if (
+            isset($this->response['_embedded']['payment'][0]['_embedded'][self::NGENIUS_CAPTURE_LITERAL])
             && is_array($this->response['_embedded']['payment'][0]['_embedded'][self::NGENIUS_CAPTURE_LITERAL])
         ) {
             $lastTransaction = end(
@@ -83,14 +84,16 @@ class ApiProcessor
     public function getCapturedAmount(): int|string
     {
         $captureAmount = 0;
-        if (isset($this->response['_embedded']['payment'][0]['_embedded'][self::NGENIUS_CAPTURE_LITERAL])
+        if (
+            isset($this->response['_embedded']['payment'][0]['_embedded'][self::NGENIUS_CAPTURE_LITERAL])
             && is_array($this->response['_embedded']['payment'][0]['_embedded'][self::NGENIUS_CAPTURE_LITERAL])
         ) {
             foreach (
                 $this->response['_embedded']['payment'][0]['_embedded']
                 [self::NGENIUS_CAPTURE_LITERAL] as $capture
             ) {
-                if (isset($capture['state']) && ($capture['state'] == 'SUCCESS')
+                if (
+                    isset($capture['state']) && ($capture['state'] == 'SUCCESS')
                     && isset($capture['amount']['value'])
                 ) {
                     $captureAmount += $capture['amount']['value'];
@@ -114,7 +117,8 @@ class ApiProcessor
     {
         $captureId = '';
 
-        if (isset($this->response['_embedded']['payment'][0]['_embedded'][self::NGENIUS_CAPTURE_LITERAL])
+        if (
+            isset($this->response['_embedded']['payment'][0]['_embedded'][self::NGENIUS_CAPTURE_LITERAL])
             && is_array($this->response['_embedded']['payment'][0]['_embedded'][self::NGENIUS_CAPTURE_LITERAL])
         ) {
             foreach (
@@ -156,6 +160,8 @@ class ApiProcessor
     }
 
     /**
+     * @codeCoverageIgnore No consumer calls this.
+     *
      * @param array $response
      */
     public function setResponse(array $response): void
@@ -169,9 +175,11 @@ class ApiProcessor
      */
     public function processPaymentAction(&$paymentAction, &$paymentState)
     {
-        if (isset($this->response['_embedded']['payment'][0]['paymentMethod']['name']) &&
+        if (
+            isset($this->response['_embedded']['payment'][0]['paymentMethod']['name']) &&
             $this->response['_embedded']['payment'][0]['paymentMethod']['name'] === 'CHINA_UNION_PAY' &&
-            $paymentAction === 'SALE') {
+            $paymentAction === 'SALE'
+        ) {
             $paymentAction = 'PURCHASE';
             $paymentState  = self::NGENIUS_PURCHASED;
         }

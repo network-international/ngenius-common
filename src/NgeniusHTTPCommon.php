@@ -3,18 +3,22 @@
 namespace Ngenius\NgeniusCommon;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 
 class NgeniusHTTPCommon
 {
     /**
      * @param NgeniusHTTPTransfer $ngeniusHTTPTransfer
+     * @param ClientInterface|null $client Optional Guzzle client; a new Client is used when omitted.
      *
      * @return string|bool
      */
-    public static function placeRequest(NgeniusHTTPTransfer $ngeniusHTTPTransfer): string|bool
-    {
-        $client       = new Client();
+    public static function placeRequest(
+        NgeniusHTTPTransfer $ngeniusHTTPTransfer,
+        ?ClientInterface $client = null
+    ): string|bool {
+        $client       = $client ?? new Client();
         $method       = $ngeniusHTTPTransfer->getMethod();
         $url          = $ngeniusHTTPTransfer->getUrl();
         $headersArray = $ngeniusHTTPTransfer->getHeaders();

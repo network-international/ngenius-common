@@ -4,7 +4,7 @@ namespace Ngenius\NgeniusCommon;
 
 class NgeniusOrderStatuses
 {
-    static public function orderStatuses($label = 'N-Genius', $key = 'ng'): array
+    public static function orderStatuses($label = 'N-Genius', $key = 'ng'): array
     {
         return [
             [
@@ -46,7 +46,7 @@ class NgeniusOrderStatuses
         ];
     }
 
-    static public function magentoOrderStatuses($label = 'N-Genius', $key = 'ngenius'): array
+    public static function magentoOrderStatuses($label = 'N-Genius', $key = 'ngenius'): array
     {
         return [
             [
