@@ -18,5 +18,4 @@ class NgeniusUtilities
 
         return substr($phonePrefix, 1);
     }
-
 }

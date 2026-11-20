@@ -2,16 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[v1.4.1]](https://github.com/network-international/ngenius-common/releases/tag/v1.4.1)
+
+#### Fixed
+
+- **Fixed** `RefundProcessor::extractUrl()` raising an undefined property error for payments without a `state`; a
+  missing state now falls through to the `cnp:refund` link lookups, so the refund URL can still be resolved.
+
 ## [[v1.4.0]](https://github.com/network-international/ngenius-common/releases/tag/v1.4.0)
 
 #### Added
+
 - **Added** support for additional wallet pathways.
 - **Added** `PARTIALLY_CAPTURED` to shared success state definitions.
 
 #### Changed
+
 - **Prioritised** `cnp:refund` action over `cnp:cancel` for KSA card capture states.
 
 #### Fixed
+
 - **Fixed** KSA region handling for full/partial captures, voids, and refunds.
 
 ## [[v1.3.0]](https://github.com/network-international/ngenius-common/releases/tag/v1.3.0)

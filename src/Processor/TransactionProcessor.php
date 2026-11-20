@@ -16,6 +16,8 @@ class TransactionProcessor
     }
 
     /**
+     * @codeCoverageIgnore No consumer calls this.
+     *
      * @return array
      */
     public function getResponse(): array
@@ -24,6 +26,8 @@ class TransactionProcessor
     }
 
     /**
+     * @codeCoverageIgnore No consumer calls this.
+     *
      * @param array $response
      *
      * @return void
@@ -42,9 +46,11 @@ class TransactionProcessor
     {
         $refunded_amt = 0.00;
 
-        if (isset($this->response[self::EMBEDDED_LITERAL][self::REFUND_LITERAL]) && is_array(
+        if (
+            isset($this->response[self::EMBEDDED_LITERAL][self::REFUND_LITERAL]) && is_array(
                 $this->response[self::EMBEDDED_LITERAL][self::REFUND_LITERAL]
-            )) {
+            )
+        ) {
             foreach ($this->response[self::EMBEDDED_LITERAL][self::REFUND_LITERAL] as $refund) {
                 $refunded_amt += $this->getTransactionAmount($refund);
             }
@@ -63,9 +69,11 @@ class TransactionProcessor
     public function getTotalCaptured(): float
     {
         $captured_amt = 0.00;
-        if (isset($this->response[self::EMBEDDED_LITERAL][self::CAPTURE_LITERAL]) && is_array(
+        if (
+            isset($this->response[self::EMBEDDED_LITERAL][self::CAPTURE_LITERAL]) && is_array(
                 $this->response[self::EMBEDDED_LITERAL][self::CAPTURE_LITERAL]
-            )) {
+            )
+        ) {
             foreach ($this->response[self::EMBEDDED_LITERAL][self::CAPTURE_LITERAL] as $capture) {
                 $captured_amt += $this->getTransactionAmount($capture);
             }
@@ -104,7 +112,8 @@ class TransactionProcessor
     public function getTransactionAmount(array $transaction): float
     {
         $amount = 0.00;
-        if (isset($transaction['state'])
+        if (
+            isset($transaction['state'])
             && ($transaction['state'] == 'SUCCESS'
                 || (isset($transaction['_links'][self::NGENIUS_CUP_RESULTS])
                     && $transaction['state'] === 'REQUESTED')) && isset($transaction['amount']['value'])
